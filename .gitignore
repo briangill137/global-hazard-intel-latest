@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+*.egg-info/
+.venv/
+.venv*/
+
+# Local data & artifacts
+glacial_pulse/data/raw/
+glacial_pulse/models/checkpoints/
+*.mseed
+*.wav
+
+# Local databases
+database/*.db
+
+# OS files
+.DS_Store
+Thumbs.db
