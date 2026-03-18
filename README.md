@@ -71,6 +71,25 @@ Example request:
 - Anomaly heatmap
 - Alert timeline
 
+## Screenshots
+**Glacial Pulse — Live Seismic Intelligence**  
+![Glacial Pulse](assets/screenshots/glacial-pulse.png)
+
+**Dashboard Overview**  
+![Dashboard Overview](assets/screenshots/dashboard-overview.png)
+
+**Wildfire Monitor**  
+![Wildfire Monitor](assets/screenshots/wildfire-monitor.png)
+
+**Wildfire Monitor (Alternate View)**  
+![Wildfire Monitor Alternate](assets/screenshots/wildfire-monitor-alt.png)
+
+**Storm Tracker**  
+![Storm Tracker](assets/screenshots/storm-tracker.png)
+
+**Alerts Archive**  
+![Alerts Archive](assets/screenshots/alerts-archive.png)
+
 ## Repository Structure
 ```
 glacial_pulse/
