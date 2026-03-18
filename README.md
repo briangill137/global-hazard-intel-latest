@@ -1,41 +1,41 @@
 # Global Hazard Intel v2.5
 
-Global Hazard Intel is a modular research platform for monitoring and forecasting extreme hazards. Version 2.5 introduces **Glacial Pulse**, a production-grade seismic audio pipeline for predicting ice shelf fractures before visible collapse.
+Global Hazard Intel is a modular hazard intelligence platform that fuses environmental data, ML signals, and real-time monitoring. Version 2.5 introduces **Glacial Pulse**, a production-grade seismic audio pipeline to predict early-stage ice shelf fractures.
 
 ## Highlights (v2.5)
-- Glacial Pulse module for sub-zero seismic audio analysis
-- Dual-path CNN + Transformer architecture with multi-head outputs
-- Real-time streaming inference and alert integration
+- Glacial Pulse seismic ML module for ice shelf fracture prediction
+- Dual-path CNN + Transformer fusion with multi-head outputs
+- Real-time streaming inference with integrated alerting
 - Unsupervised autoencoder for anomaly scoring
-- Seasonal trend learning for glacier stress cycles
-- Monitoring API endpoint for external systems
+- Seasonal baseline learning for glacier stress cycles
+- FDSN API fetch utility for real seismic waveforms
+- Research-grade visualization panel in the main dashboard
 
 ## Quick Start
 ```bash
 python main.py
 ```
 
-The dashboard includes the new **Glacial Pulse** panel with live spectrograms, probability trends, anomaly heatmaps, and alert timelines.
-
-## Glacial Pulse Usage
-### Training (synthetic or real data)
+## Glacial Pulse
+### Training (synthetic or local data)
 ```bash
 python -m glacial_pulse.train.train_model --data-dir glacial_pulse/data --epochs 5
 ```
 
-### Training with live FDSN seismic data (API fetch)
+### Training with live FDSN seismic data
 ```bash
 python -m glacial_pulse.train.train_model --fetch-fdsn --epochs 5
 ```
 
-Default FDSN settings pull Antarctic data from the EarthScope dataselect service:
-```text
+Default FDSN settings:
+```
 Base URL: https://service.earthscope.org/fdsnws/dataselect/1/
 Network: IU
 Station: PMSA
 Channel: BH?
 ```
-Note: FDSN waveform downloads are unlabeled; the training dataset applies a low-frequency anomaly heuristic to create pseudo-labels.
+
+Note: FDSN waveforms are unlabeled. The dataset applies a low-frequency anomaly heuristic to create pseudo-labels for training.
 
 ### Real-time inference demo
 ```bash
@@ -47,7 +47,7 @@ python -m glacial_pulse.infer.real_time_infer --steps 8
 python -m glacial_pulse.api.server --port 8084
 ```
 
-Example request (JSON):
+Example request:
 ```json
 {
   "audio_path": "path/to/window.wav",
@@ -55,15 +55,23 @@ Example request (JSON):
 }
 ```
 
-## Glacial Pulse Pipeline
-1. **Input**: `.wav` or `.mseed` seismic audio (synthetic fallback supported)
-2. **Preprocessing**: bandpass filtering, normalization, windowing
-3. **Features**: log-mel spectrograms, temporal FFT rhythms, low-frequency anomaly scores
-4. **Model**: CNN + Transformer fusion with heads for fracture probability, time-to-fracture, and confidence
-5. **Anomaly**: autoencoder-based reconstruction error and low-frequency spike detection
-6. **Alerts**: triggers when `fracture_prob > 0.8` and anomaly score is high
+## Model Architecture
+- CNN encoder for spatial spectrogram features
+- Transformer encoder for temporal dynamics
+- Fusion layer with three output heads
+- Heads: fracture probability, time-to-fracture, confidence
 
-## Project Structure
+## Alert Logic
+- Trigger when `fracture_prob > 0.8` AND anomaly score is high
+- Emits a hazard event and alert in the Global Hazard Intel stream
+
+## Visualization Panel
+- Live spectrogram viewer
+- Fracture probability timeline
+- Anomaly heatmap
+- Alert timeline
+
+## Repository Structure
 ```
 glacial_pulse/
   data/
@@ -77,18 +85,17 @@ glacial_pulse/
   api/
 ```
 
-## Dependencies
-Core runtime:
+## Requirements
 - Python 3.10+
-- `torch`
-- `numpy`
-- `matplotlib`
-- `scikit-learn`
+- torch
+- numpy
+- matplotlib
+- scikit-learn
+- obspy (required for `.mseed` files and FDSN API downloads)
 
-Optional:
-- `obspy` for `.mseed` seismic files
-- `obspy` is required for FDSN API downloads
+## Troubleshooting
+- If FDSN requests time out, reduce the time window or increase `--fdsn-timeout-sec`.
+- If `.mseed` loading fails, ensure `obspy` is installed.
 
-## Notes
-- If no datasets are available, the module automatically generates synthetic glacier stress audio for demos and training.
-- Alerts are integrated into the existing Global Hazard Intel alert stream.
+## License
+Apache-2.0
