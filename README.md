@@ -98,4 +98,11 @@ glacial_pulse/
 - If `.mseed` loading fails, ensure `obspy` is installed.
 
 ## License
-Apache-2.0
+This software is proprietary and requires a paid license for use, distribution, or modification.
+
+Purchase: www.bgcode.tech  
+Contact: contact@bgcode.tech, brian.gill@bgcode.tech
+
+## Contact
+- contact@bgcode.tech
+- brian.gill@bgcode.tech
